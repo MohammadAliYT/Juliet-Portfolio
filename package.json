@@ -12,7 +12,7 @@
   "engines": {
     "node": ">=16.0.0",
     "yarn": ">=1.22.19",
-    "npm": "please-use-yarn"
+    "npm": ">=6.0.0"
   },
   "dependencies": {
     "@next/font": "13.1.4",
