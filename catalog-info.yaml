@@ -1,0 +1,23 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  namespace: juliet
+  annotations:
+    github.com/project-slug: MohammadAliYT/Juliet-Portfolio
+    backstage.io/kubernetes-id: juliet-service
+  name: juliet
+  description: juliet App for user management
+  tags:
+    - juliet
+    - mazedaar
+  relations:
+    - type: ownedBy
+      targetRef: user:default/MohammadAliYT
+      target:
+        kind: user
+        namespace: juliet-app
+        name: MohammadAliYT
+spec:
+  type: website
+  owner: user:MohammadAliYT
+  lifecycle: experimental
