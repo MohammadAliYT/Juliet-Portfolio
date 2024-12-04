@@ -4,6 +4,7 @@ metadata:
   namespace: juliet
   annotations:
     github.com/project-slug: MohammadAliYT/Juliet-Portfolio
+    backstage.io/kubernetes-id: juliet
   name: juliet
   description: juliet App for user management
   tags:
