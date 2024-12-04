@@ -16,27 +16,43 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Some changes for deployment on a Minikube instance
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+I am mentioning these steps
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+if you already have a minikube instance running, which is not working or have been configured incorrectly. It will be better for you to start over
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- `minikube stop`
+- `minikube delete`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+#### startover
 
-## Learn More
+- `minikube start`
+- `eval $(minikube docker-env)`
+- `docker build -t <app-name>:latest` or in our case `docker build -t juliet:latest`
+- `kubectl apply -f deployment.yaml`
+- `kubectl apply -f service.yaml`
+- `docker images`
 
-To learn more about Next.js, take a look at the following resources:
+\ This should reflect our image, `juliet:latest`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- kubectl get pods
+- kubectl expose deployment juliet --type=NodePort --port=8080
+- minikube service juliet
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Troubleshooting
 
-## Deploy on Vercel
+### Pod Error
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+check logs
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- `kubectl get pods`
+- `kubectl logs <pod-name>`
+- `kubectl describe pod <pod-name>`
+
+Make sure that your app is in production mode.<br>
+If Alles Kaputt
+
+`delete and reapply deployment.yaml and service.yaml`
+
+Also make sure target port in `service.yaml` is same as container port in `deployment.yaml` and `dockerfile`
